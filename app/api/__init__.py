@@ -1,5 +1,5 @@
-"""API package."""
+"""API package exports."""
 
-from app.api.api_v1.api import api_router
+from app.api.v1.api import api_router
 
 __all__ = ["api_router"]

@@ -1,11 +1,5 @@
-"""Schema exports."""
+"""Pydantic schemas exposed by the application."""
 
-from app.schemas.background import BackgroundRemovalResponse
-from app.schemas.user import User, UserBase, UserCreate
+from app.schemas.background import BackgroundRemovalData, BackgroundRemovalResponse
 
-__all__ = [
-    "BackgroundRemovalResponse",
-    "UserBase",
-    "UserCreate",
-    "User",
-]
+__all__ = ["BackgroundRemovalData", "BackgroundRemovalResponse"]

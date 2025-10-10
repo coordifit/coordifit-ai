@@ -1,4 +1,4 @@
-"""Coordifit AI application package."""
+"""Application package exports."""
 
 from app.main import app
 

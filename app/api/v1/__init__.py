@@ -1,5 +1,5 @@
-"""Versioned API package."""
+"""Versioned API package exports."""
 
-from app.api.v1.endpoints import background
+from app.api.v1.api import api_router
 
-__all__ = ["background"]
+__all__ = ["api_router"]

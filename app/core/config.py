@@ -1,19 +1,31 @@
 from functools import lru_cache
 from typing import List
 
+from pydantic import Field
 from pydantic_settings import BaseSettings
 
-
 class Settings(BaseSettings):
-    """Application configuration."""
+    """Application configuration loaded from environment variables."""
 
-    app_name: str = "Background Removal API"
-    api_v1_str: str = "/api/v1"
-    allowed_origins: List[str] = ["*"]
+    api_v1_str: str = Field("/api/v1", env="API_V1_STR")
+    allowed_origins: str = Field("", env="ALLOWED_ORIGINS")
+    max_upload_mb: int = Field(5, env="MAX_UPLOAD_MB")
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+
+    @property
+    def allowed_origins_list(self) -> List[str]:
+        if not self.allowed_origins:
+            return []
+        return [origin.strip() for origin in self.allowed_origins.split(",") if origin.strip()]
+
+    @property
+    def max_upload_bytes(self) -> int:
+        return self.max_upload_mb * 1024 * 1024
 
 
-@lru_cache
+@lru_cache()
 def get_settings() -> Settings:
-    """Return a cached Settings instance."""
-
     return Settings()

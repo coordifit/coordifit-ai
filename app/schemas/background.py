@@ -1,12 +1,18 @@
-"""Pydantic schemas for background removal endpoints."""
+"""Schemas for background removal endpoints."""
 
+from typing import Literal
 from pydantic import BaseModel, Field
+
+class BackgroundRemovalData(BaseModel):
+    result_image: str = Field(..., alias="resultImage", description="Base64 encoded PNG image")
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class BackgroundRemovalResponse(BaseModel):
-    """Response payload for successful background removal."""
+    status: Literal["success"] = Field("success")
+    data: BackgroundRemovalData
 
-    status: str = Field(default="success", description="Processing status")
-    result_image: str = Field(
-        ..., description="Base64 encoded PNG image with transparent background"
-    )
+    class Config:
+        allow_population_by_field_name = True
