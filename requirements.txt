@@ -1,9 +1,9 @@
 fastapi
 uvicorn
-rembg
-onnxruntime==1.18.0
+rembg[cpu]
+onnxruntime
 python-multipart
 pydantic
 pydantic-settings
 pillow
-numpy
+numpy<2.0
