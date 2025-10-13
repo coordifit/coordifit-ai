@@ -1,6 +1,9 @@
 fastapi
 uvicorn
-pillow
 rembg
+onnxruntime
 python-multipart
+pydantic
 pydantic-settings
+pillow
+numpy
