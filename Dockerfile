@@ -1,8 +1,7 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 
-# 시스템 패키지(필요 최소만)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl ca-certificates && \
+    gcc g++ libgl1 libglib2.0-0 curl ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -18,4 +17,4 @@ ENV UVICORN_WORKERS=1 \
     PORT=8000
 
 EXPOSE 8000
-CMD ["sh", "-c", "uvicorn main:app --host ${HOST} --port ${PORT} --workers ${UVICORN_WORKERS}"]
+CMD ["sh", "-c", "uvicorn app.main:app --host ${HOST} --port ${PORT} --workers ${UVICORN_WORKERS}"]
