@@ -7,7 +7,7 @@ from app.core.config import get_settings
 
 settings = get_settings()
 
-app = FastAPI(title="CoordiFit AI API", version="1.0.0")
+app = FastAPI(title="Background Removal API", version="1.0.0")
 
 origins = settings.allowed_origins_list or ["*"]
 

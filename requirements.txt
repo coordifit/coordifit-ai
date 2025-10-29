@@ -7,5 +7,3 @@ pydantic
 pydantic-settings
 pillow
 numpy<2.0
-easyocr
-opencv-python

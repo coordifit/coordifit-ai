@@ -1,7 +1,6 @@
-"""Domain logic for background removal operations."""
+"""Domain logic for background removal operations (sharp mode)."""
 
 from io import BytesIO
-
 from PIL import Image
 from rembg import remove
 
@@ -11,9 +10,14 @@ class BackgroundRemovalError(Exception):
 
 
 def remove_background(image_bytes: bytes) -> bytes:
-    """Remove the background from the provided image and return PNG bytes."""
+    """Remove the background from the provided image and return PNG bytes (sharp preset)."""
     try:
-        result_bytes = remove(image_bytes)
+        # ⚙️ sharp preset 적용 — 옷 상품 등록용, 경계가 또렷하게
+        result_bytes = remove(
+            image_bytes,
+            alpha_matting=False,    # 경계 흐림 제거
+            post_process_mask=True  # 잔여 픽셀/노이즈 제거
+        )
     except Exception as exc:
         raise BackgroundRemovalError("Failed to remove background") from exc
 
