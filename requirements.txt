@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 annotated-types==0.7.0
 anyio==4.11.0
 attrs==25.4.0
@@ -63,3 +64,15 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 urllib3==2.5.0
 uvicorn==0.38.0
+=======
+fastapi
+uvicorn
+rembg[cpu]
+onnxruntime
+python-multipart
+pydantic
+pydantic-settings
+pillow
+numpy<2.0
+easyocr
+>>>>>>> 682104fdcde2f98d5fd871245f5b635c41805cf6
