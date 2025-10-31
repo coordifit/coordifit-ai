@@ -1,9 +1,8 @@
 name: Build and Push YOLO Image
 
 on:
-  pull_request:
+  push:
     branches: [dev]
-    types: [closed]
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
