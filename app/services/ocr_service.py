@@ -9,7 +9,12 @@ from typing import List, Dict, Any
 class OCRError(Exception):
     """Raised when an OCR operation fails."""
 
-reader = easyocr.Reader(['ko', 'en'], gpu=False, download_enabled=False, model_storage_directory="/root/.EasyOCR")
+reader = easyocr.Reader(
+    ['ko', 'en'], 
+    gpu=False, 
+    download_enabled=False, 
+    model_storage_directory="/root/.EasyOCR"
+)
 
 
 def extract_text_from_image(image_bytes: bytes) -> List[Dict[str, Any]]:
