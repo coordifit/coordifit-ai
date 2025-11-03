@@ -11,6 +11,13 @@ RUN pip install --no-cache-dir -r requirements.txt && rm -rf /root/.cache
 
 COPY . .
 
+RUN python3 - <<EOF
+import easyocr, os
+os.makedirs("/root/.EasyOCR", exist_ok=True)
+easyocr.Reader(['ko','en'], model_storage_directory="/root/.EasyOCR")
+EOF
+
+
 # Uvicorn 1 worker (메모리 아끼기)
 ENV UVICORN_WORKERS=1 \
     HOST=0.0.0.0 \

@@ -9,9 +9,7 @@ from typing import List, Dict, Any
 class OCRError(Exception):
     """Raised when an OCR operation fails."""
 
-
-# ✅ Reader는 1회만 로드 (매 요청마다 새로 로드하면 느려짐)
-reader = easyocr.Reader(['ko', 'en'], gpu=False)
+reader = easyocr.Reader(['ko', 'en'], gpu=False, download_enabled=False, model_storage_directory="/root/.EasyOCR")
 
 
 def extract_text_from_image(image_bytes: bytes) -> List[Dict[str, Any]]:
