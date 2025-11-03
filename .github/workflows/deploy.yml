@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push YOLO image
+      - name: Build and Push FastAPI image
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            echo "Pulling latest YOLO Docker image..."
+            echo "Pulling latest FastAPI Docker image..."
             cd /home/ubuntu/app
             docker compose pull fastapi
 
