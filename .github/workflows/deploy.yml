@@ -38,7 +38,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "Pulling latest FastAPI Docker image..."
-            cd /home/ubuntu/app
+            cd /home/ubuntu/coordifit
             docker compose pull fastapi
 
             echo "Restarting fastapi service..."
