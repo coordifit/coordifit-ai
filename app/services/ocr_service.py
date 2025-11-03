@@ -3,42 +3,55 @@
 import easyocr
 import numpy as np
 import cv2
+import logging
+import traceback
 from typing import List, Dict, Any
 
+logger = logging.getLogger("uvicorn.error")
 
 class OCRError(Exception):
     """Raised when an OCR operation fails."""
 
-reader = easyocr.Reader(
-    ['ko', 'en'], 
-    gpu=False, 
-    download_enabled=False, 
-    model_storage_directory="/root/.EasyOCR"
-)
+try:
+    logger.info("📦 Loading EasyOCR models...")
+    reader = easyocr.Reader(
+        ['ko', 'en'], 
+        gpu=False, 
+        download_enabled=False, 
+        model_storage_directory="/root/.EasyOCR"
+    )
+    logger.info("✅ EasyOCR model loaded successfully.")
+except Exception as e:
+    logger.error(f"❌ Failed to load EasyOCR model: {e}")
+    raise
 
 
 def extract_text_from_image(image_bytes: bytes) -> List[Dict[str, Any]]:
     """이미지 바이트에서 텍스트 추출"""
     try:
-        # 바이트를 numpy 배열로 변환
         np_image = np.frombuffer(image_bytes, np.uint8)
         image = cv2.imdecode(np_image, cv2.IMREAD_COLOR)
         
         if image is None:
+            logger.error("❌ [OCR] Failed to decode image - image is None")
             raise OCRError("Failed to decode image")
         
-        # EasyOCR로 텍스트 추출
+        logger.info("✅ [OCR] Image decoded successfully")
+        logger.info("🧠 [OCR] Running EasyOCR...")
+
         results = reader.readtext(image)
         
-        # 결과를 구조화된 형태로 변환
-        texts = []
-        for (bbox, text, conf) in results:
-            texts.append({
-                "text": text,
-                "confidence": float(conf)
-            })
+        logger.info(f"🔍 [OCR Raw Results]: {results}")
         
+        texts = [{
+            "text": text,
+            "confidence": float(conf)
+        } for (bbox, text, conf) in results]
+        
+        logger.info(f"✅ [OCR] Extracted {len(texts)} text items")
         return texts
         
     except Exception as exc:
+        logger.error("🔥 [OCR ERROR] Exception occurred:")
+        logger.error(traceback.format_exc())
         raise OCRError(f"Failed to extract text from image: {str(exc)}") from exc
