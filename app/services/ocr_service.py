@@ -1,11 +1,23 @@
 """OCR service for text extraction from images using EasyOCR."""
-
+import os
+from dotenv import load_dotenv
 import easyocr
 import numpy as np
 import cv2
 import logging
 import traceback
 from typing import List, Dict, Any
+
+load_dotenv()
+
+EASYOCR_MODEL_DIR = os.getenv("EASYOCR_MODEL_DIR", "/root/.EasyOCR")
+U2NET_MODEL_DIR = os.getenv("U2NET_MODEL_DIR", "/root/.u2net")
+
+print("🔍 Loaded EASYOCR_MODEL_DIR:", EASYOCR_MODEL_DIR)
+print("🔍 Loaded U2NET_MODEL_DIR:", U2NET_MODEL_DIR)
+
+os.makedirs(EASYOCR_MODEL_DIR, exist_ok=True)
+os.makedirs(U2NET_MODEL_DIR, exist_ok=True)
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -17,8 +29,8 @@ try:
     reader = easyocr.Reader(
         ['ko', 'en'], 
         gpu=False, 
-        download_enabled=False, 
-        model_storage_directory="/root/.EasyOCR"
+        download_enabled=True,
+        model_storage_directory=EASYOCR_MODEL_DIR
     )
     logger.info("✅ EasyOCR model loaded successfully.")
 except Exception as e:

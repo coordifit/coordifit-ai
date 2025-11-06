@@ -6,3 +6,6 @@ __pycache__/
 .gitignore
 static/removed
 .env
+
+# model
+models

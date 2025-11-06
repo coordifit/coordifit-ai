@@ -10,10 +10,13 @@ class Settings(BaseSettings):
     api_v1_str: str = Field("/api/v1", env="API_V1_STR")
     allowed_origins: str = Field("", env="ALLOWED_ORIGINS")
     max_upload_mb: int = Field(5, env="MAX_UPLOAD_MB")
+    easyocr_model_dir: str = Field("/root/.EasyOCR", env="EASYOCR_MODEL_DIR")
+    u2net_model_dir: str = Field("/root/.u2net", env="U2NET_MODEL_DIR")
 
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
+        extra="ignore"
 
     @property
     def allowed_origins_list(self) -> List[str]:
